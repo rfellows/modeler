@@ -207,6 +207,24 @@ public class MondrianSchemaHandler {
     }
   }
 
+  Node getLevelNode( String dimensionName, String levelName ) throws ModelerException {
+    if ( StringUtils.isBlank( dimensionName ) || StringUtils.isBlank( levelName ) ) {
+      return null;
+    }
+    // use XPath to get measure node and remove it from it's parent
+    try {
+      XPathFactory xPathFactory = XPathFactory.newInstance();
+      XPath xPath = xPathFactory.newXPath();
+      StringBuffer xPathExpr = new StringBuffer();
+      xPathExpr.append( "/Schema/Dimension[@name=\"" + dimensionName + "\"]//Level[@name=\"" + levelName + "\"]" );
+      XPathExpression xPathExpression = xPath.compile( xPathExpr.toString() );
+      return (Node) xPathExpression.evaluate( this.schema, XPathConstants.NODE );
+    } catch ( Exception e ) {
+      throw new ModelerException( e );
+    }
+
+
+  }
 
   /**
    * remove a measure
@@ -281,6 +299,48 @@ public class MondrianSchemaHandler {
       throw new ModelerException( e );
     }
     return true;
+  }
+
+  public boolean hideLevel( String dimensionName, String levelName ) {
+    try {
+      Node levelNode = getLevelNode( dimensionName, levelName );
+      setVisibilityOfNode( levelNode, false );
+      return true;
+    } catch ( ModelerException e ) {
+      return false;
+    }
+  }
+
+  public boolean hideMeasure( String cubeName, String measureName ) {
+    try {
+      Node measureNode = getMeasureNode( cubeName, measureName );
+      setVisibilityOfNode( measureNode, false );
+      return true;
+    } catch ( ModelerException e ) {
+      return false;
+    }
+  }
+
+  public boolean showMeasure( String cubeName, String measureName ) {
+    try {
+      Node measureNode = getMeasureNode( cubeName, measureName );
+      setVisibilityOfNode( measureNode, true );
+      return true;
+    } catch ( ModelerException e ) {
+      return false;
+    }
+  }
+
+  protected void setVisibilityOfNode( Node node, boolean visible ) {
+    NamedNodeMap attributes = node.getAttributes();
+    Node attr = attributes.getNamedItem( "visible" );
+    if ( attr == null ) {
+      // create the node and set it
+      attr = this.schema.createAttribute( "visible" );
+    }
+
+    attr.setNodeValue( visible ? "true" : "false" );
+    node.getAttributes().setNamedItem( attr );
   }
 
   public Document getSchema() {

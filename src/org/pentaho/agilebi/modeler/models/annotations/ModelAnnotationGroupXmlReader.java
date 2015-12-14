@@ -181,6 +181,14 @@ public class ModelAnnotationGroupXmlReader {
       case CREATE_CALCULATED_MEMBER:
         CreateCalculatedMember calculatedMember = new CreateCalculatedMember();
         return new ModelAnnotation<CreateCalculatedMember>( calculatedMember );
+      case HIDE_MEASURE:
+        HideMeasure hideMemberAnnotation = new HideMeasure();
+        hideMemberAnnotation.setName( field );
+        return new ModelAnnotation<HideMeasure>( hideMemberAnnotation );
+      case SHOW_MEASURE:
+        ShowMeasure showMeasure = new ShowMeasure();
+        showMeasure.setName( field );
+        return new ModelAnnotation<ShowMeasure>( showMeasure );
       default:
         BlankAnnotation ba = new BlankAnnotation();
         ba.setField( field );
