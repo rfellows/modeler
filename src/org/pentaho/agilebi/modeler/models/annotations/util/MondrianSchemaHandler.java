@@ -311,6 +311,16 @@ public class MondrianSchemaHandler {
     }
   }
 
+  public boolean showLevel( String dimensionName, String levelName ) {
+    try {
+      Node levelNode = getLevelNode( dimensionName, levelName );
+      setVisibilityOfNode( levelNode, true );
+      return true;
+    } catch ( ModelerException e ) {
+      return false;
+    }
+  }
+
   public boolean hideMeasure( String cubeName, String measureName ) {
     try {
       Node measureNode = getMeasureNode( cubeName, measureName );

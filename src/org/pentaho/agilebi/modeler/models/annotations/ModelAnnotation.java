@@ -58,6 +58,8 @@ public class ModelAnnotation<T extends AnnotationType> implements Serializable {
   private static final String BLANK_ENUM_VALUE = "";
   private static final String HIDE_MEASURE_ENUM_VALUE = "Hide Measure";
   private static final String SHOW_MEASURE_ENUM_VALUE = "Show Measure";
+  private static final String HIDE_LEVEL_ENUM_VALUE = "Hide Level";
+  private static final String SHOW_LEVEL_ENUM_VALUE = "Show Level";
 
   @MetaStoreAttribute
   private String name = UUID.randomUUID().toString(); // default random identifier
@@ -324,6 +326,22 @@ public class ModelAnnotation<T extends AnnotationType> implements Serializable {
         final ModelAnnotationGroup modelAnnotations,
         final ModelAnnotation modelAnnotation,
         final ValueMetaInterface valueMeta ) {
+        return true;
+      }
+    },
+    HIDE_LEVEL( HIDE_LEVEL_ENUM_VALUE ) {
+      @Override public boolean isApplicable(
+      final ModelAnnotationGroup modelAnnotations,
+      final ModelAnnotation modelAnnotation,
+      final ValueMetaInterface valueMeta ) {
+        return true;
+      }
+    },
+    SHOW_LEVEL( SHOW_LEVEL_ENUM_VALUE ) {
+      @Override public boolean isApplicable(
+      final ModelAnnotationGroup modelAnnotations,
+      final ModelAnnotation modelAnnotation,
+      final ValueMetaInterface valueMeta ) {
         return true;
       }
     };
