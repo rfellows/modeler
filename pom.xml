@@ -8,7 +8,7 @@
     <version>1.2.6</version>
   </parent>
   <groupId>pentaho</groupId>
-  <artifactId>pentaho-modeler</artifactId>
+  <artifactId>pentaho-modeler-parent</artifactId>
   <version>7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Pentaho Community Edition Project: ${project.artifactId}</name>
@@ -20,10 +20,9 @@
     <url>scm:git:git@github.com:pentaho/${project.artifactId}.git</url>
   </scm>
   <modules>
-    <module>xul</module> 
-    <module>gwt</module> 
-    <module>assemblies</module> 
-  </modules>  
+    <module>core</module>
+    <module>gwt</module>
+  </modules>
   <properties>
     <dependency.pentaho-metadata.revision>7.0-SNAPSHOT</dependency.pentaho-metadata.revision>
     <maven-bundle-plugin.version>2.3.7</maven-bundle-plugin.version>
